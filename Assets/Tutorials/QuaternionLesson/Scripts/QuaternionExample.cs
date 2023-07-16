@@ -8,6 +8,9 @@ namespace Tutorials.QuaternionLesson.Scripts
         [SerializeField] private Transform _transform;
         
         [SerializeField] private bool _isPlay;
+        
+        private Quaternion _startRotation;
+        private Quaternion _targetRotation;
      
         void Update()
         {
@@ -30,11 +33,11 @@ namespace Tutorials.QuaternionLesson.Scripts
 
              //_transform.rotation *= Quaternion.Euler(0f, 1f, 0f);
             
-            //_transform.Rotate(0f, 1f, 0f);
+             //_transform.Rotate(0f, 1f, 0f);
             
             //_transform.rotation = Quaternion.identity;
 
-            //float angle = Quaternion.Angle(_startRotation, _targetRotation);
+            float angle = Quaternion.Angle(_startRotation, _targetRotation);
         }
     }
 }

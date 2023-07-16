@@ -24,7 +24,7 @@ namespace Tutorials.QuaternionLesson.Scripts
 
         private void RotateLerp()
         {
-            _transform.rotation = Quaternion.Lerp(_startRotation, _targetRotation, _t);
+            //_transform.rotation = Quaternion.Lerp(_startRotation, _targetRotation, _t);
             //_transform.rotation = Quaternion.LerpUnclamped(_startRotation, _targetRotation, _t);
             //_transform.rotation = Quaternion.Slerp(_startRotation, _targetRotation, _t);
             //_transform.rotation = Quaternion.SlerpUnclamped(_startRotation, _targetRotation, _t);
