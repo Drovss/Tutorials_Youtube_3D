@@ -8,14 +8,14 @@ namespace Tutorials.Matrix4x4_lesson.Scripts
         [SerializeField] private Vector3 _eulerAngles;
         [SerializeField] private Vector3 _scale = new Vector3(1, 1, 1);
 
-        private MeshFilter _mf;
+        [SerializeField] private MeshFilter _mf;
+        
         private Vector3[] _origVerts;
         private Vector3[] _newVerts;
 
 
         private void Start()
         {
-            _mf = GetComponent<MeshFilter> ();
             _origVerts = _mf.mesh.vertices;
             _newVerts = new Vector3[_origVerts.Length];
         }

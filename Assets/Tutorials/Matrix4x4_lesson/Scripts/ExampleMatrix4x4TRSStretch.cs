@@ -7,13 +7,13 @@ namespace Tutorials.Matrix4x4_lesson.Scripts
         [SerializeField] private float _rotAngle;
         [SerializeField] private float _stretch;
 
-        private MeshFilter _mf;
+        [SerializeField] private MeshFilter _mf;
+        
         private Vector3[] _origVerts;
         private Vector3[] _newVerts;
 
         private void Start()
         {
-            _mf = GetComponent< MeshFilter > ();
             _origVerts = _mf.mesh.vertices;
             _newVerts = new Vector3[_origVerts.Length];
         }

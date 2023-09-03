@@ -1,7 +1,5 @@
-﻿using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Tutorials.Matrix4x4_lesson.Scripts
 {
@@ -11,7 +9,7 @@ namespace Tutorials.Matrix4x4_lesson.Scripts
         [SerializeField] private Transform _transformCenter;
         [SerializeField] private TextMeshProUGUI _text;
 
-        [FormerlySerializedAs("_isLocal")] [SerializeField] private bool _isGlobal;
+        [SerializeField] private bool _isGlobal;
         private void Start()
         {
             //NewMatrix();
@@ -39,7 +37,7 @@ namespace Tutorials.Matrix4x4_lesson.Scripts
 
             //RotateTransform();
 
-            //TransformMatrix();
+            TransformMatrix();
 
             // var matrix = CreateRotationMatrix(
             //     _transformCenter.position, 
@@ -94,22 +92,23 @@ namespace Tutorials.Matrix4x4_lesson.Scripts
 
         private void MultiplyMatrix()
         {
-            var translationMatrix = new Matrix4x4(
-                new Vector4(1, 0, 0, 0),
-                new Vector4(0, 1, 0, 0),
-                new Vector4(0, 0, 1, 0),
-                new Vector4(5, 0, 0, 1)
+            
+            var matrix = Matrix4x4.TRS(
+                new Vector3(5, 0, 0),
+                Quaternion.Euler(90, 0, 0),
+                new Vector3(1, 5, 1)
             );
 
-            var v = new Vector3(0, 1, 2);
-            var result = translationMatrix.MultiplyPoint3x4(v); // = (5, 1, 2)
+                Vector3 inputVector = new Vector3(0, 1, 2);
+                
+                Vector3 result = matrix.MultiplyPoint3x4(inputVector);
+                
         }
 
         private void TranslatePoint()
         {
             var input = new Vector3(0, 1, 2);
-            var translationMatrix =
-                Matrix4x4.Translate(new Vector3(5, 1, -2));
+            var translationMatrix = Matrix4x4.Translate(new Vector3(5, 1, -2));
             var result = translationMatrix.MultiplyPoint(input); // = (5, 2, 0)
         }
 
@@ -123,11 +122,14 @@ namespace Tutorials.Matrix4x4_lesson.Scripts
 
         private void RotatePoint()
         {
-            Matrix4x4 rotationMatrix = Matrix4x4.Rotate(Quaternion.Euler(0f, 90f, 0f));
+            Quaternion angle = Quaternion.Euler(0f, 90f, 0f);
+            
+            Matrix4x4 rotationMatrix = Matrix4x4.Rotate(angle);
+            
             var input = new Vector3(0, 0, 1);
             
-            var result = rotationMatrix.MultiplyVector(input); // (1,0,0)
-            Debug.Log(result);
+            var result = rotationMatrix.MultiplyVector(input);
+            
         }
 
         private void RotateTransform()
@@ -167,7 +169,9 @@ namespace Tutorials.Matrix4x4_lesson.Scripts
             var translation = Matrix4x4.Translate(new Vector3(5, 0, 0));
             var rotation = Matrix4x4.Rotate(Quaternion.Euler(90, 0, 0));
             var scale = Matrix4x4.Scale(new Vector3(1, 5, 1));
+            
             var combined = translation * rotation * scale;
+            
             var input = new Vector3(1, 1, 1);
             var result = combined.MultiplyPoint(input);
             Debug.Log(result); // = (6, 1, 5)
@@ -180,6 +184,58 @@ namespace Tutorials.Matrix4x4_lesson.Scripts
                 Quaternion.Euler(90, 0, 0),
                 new Vector3(1, 5, 1)
             );
+        }
+        private void Matrix2()
+        {
+            var matrix = new Matrix4x4(
+                new Vector4(1, 0, 0, 0),
+                new Vector4(0, 1, 0, 0),
+                new Vector4(0, 0, 1, 0),
+                new Vector4(5, 0, 0, 1)
+            );
+
+            float determinant = matrix.determinant;
+
+            Matrix4x4 matrixInverse = matrix.inverse;
+
+            bool matrixIsIdentity = matrix.isIdentity;
+
+            Vector3 matrixLossyScale = matrix.lossyScale;
+
+            Quaternion matrixRotation = matrix.rotation;
+
+            Matrix4x4 matrixTranspose = matrix.transpose;
+        }
+        
+        private void Matrix3()
+        {
+                    var matrix = new Matrix4x4(
+                        new Vector4(1, 0, 0, 0),
+                        new Vector4(0, 1, 0, 0),
+                        new Vector4(0, 0, 1, 0),
+                        new Vector4(5, 0, 0, 1)
+                    );
+
+                    int index = 1;
+                    Vector4 vector4 = new Vector4(0, 1, 0, 0);
+                    
+                    Vector3 position = matrix.GetPosition();
+                    
+                    Vector4 column = matrix.GetColumn(index);
+                    
+                    Vector4 row = matrix.GetRow(index);
+                    
+                    matrix.SetColumn(index, vector4);
+                    
+                    matrix.SetRow(index, vector4);
+                    
+                    matrix.SetTRS(
+                        transform.position,
+                        transform.rotation, 
+                        transform.lossyScale);
+
+                    Plane plane = matrix.TransformPlane(new Plane());
+
         }
     }
 }
